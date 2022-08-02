@@ -25,4 +25,14 @@ resource "aws_lambda_function" "lab_lambda_image_rekognition" {
   #     foo = "bar"
   #   }
   # }
+
+  #pascal was facing issue with timout. In default timeout will be for 3 sec increasing it from 3 to 10. Mine was working fine so I commented it out
+  timeout = 10
+
+  #we need to create a new environment to use dynamodb inside lambda
+  environment {
+    variables = {
+      "METADATA_TABLE" =aws_dynamodb_table.lambda_image_rekognition.name
+    }
+  }
 }
